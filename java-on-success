@@ -5,6 +5,8 @@ set -e
 echo "Start on success"
 
 # create output folders
+
+ls shippable
 mkdir -pv shippable/testresults
 
 mkdir -pv shippable/codecoverage
