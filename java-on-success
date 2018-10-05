@@ -11,6 +11,8 @@ mkdir -pv shippable/codecoverage
 
 mkdir -pv shippable/artifacts
 
+mkdir -pv shippable/codecoverage
+
 # copy the output
 if [ -d ./build/test-results ]; then echo "Copying test results"; cp -Rv ./build/test-results/* ./shippable/testresults; fi
 if [ -d ./build/reports/cobertura ]; then echo "Copying cobertura results"; cp -Rv ./build/reports/cobertura/*.xml ./shippable/codecoverage; fi
