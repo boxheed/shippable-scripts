@@ -1,3 +1,10 @@
 #!/usr/bin/env bash
 
-echo "I am a script"
+set -e
+
+# create output folders
+mkdir -p shippable/testresults
+mkdir -p shippable/codecoverage
+mkdir -p shippable/artifacts
+
+# copy the build artefacts
