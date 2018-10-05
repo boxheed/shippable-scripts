@@ -7,4 +7,7 @@ mkdir -p shippable/testresults
 mkdir -p shippable/codecoverage
 mkdir -p shippable/artifacts
 
-# copy the build artefacts
+# copy the output
+if [ -d ./build/test-results ]; then cp -R ./build/test-results/* ./shippable/testresults; fi
+if [ -d ./build/reports/cobertura ]; then cp -R ./build/reports/cobertura/*.xml ./shippable/codecoverage; fi
+if [ -d ./build/libs ]; then cp -R ./build/libs/* ./shippable/artifacts; fi
