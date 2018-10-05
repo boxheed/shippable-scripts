@@ -2,13 +2,17 @@
 
 set -e
 
+echo "Start on success"
+
 # create output folders
-mkdir -p shippable/testresults
-mkdir -p shippable/codecoverage
-mkdir -p shippable/artifacts
+mkdir -pv shippable/testresults
+mkdir -pv shippable/codecoverage
+mkdir -pv shippable/artifacts
 
 # copy the output
-if [ -d ./build/test-results ]; then cp -R ./build/test-results/* ./shippable/testresults; fi
-if [ -d ./build/reports/cobertura ]; then cp -R ./build/reports/cobertura/*.xml ./shippable/codecoverage; fi
-if [ -d ./build/reports/jacoco/test ]; then cp -R ./build/reports/jacoco/test/*.xml ./shippable/codecoverage; fi
-if [ -d ./build/libs ]; then cp -R ./build/libs/* ./shippable/artifacts; fi
+if [ -d ./build/test-results ]; then echo "Copying test results"; cp -Rv ./build/test-results/* ./shippable/testresults; fi
+if [ -d ./build/reports/cobertura ]; then echo "Copying cobertura results"; cp -Rv ./build/reports/cobertura/*.xml ./shippable/codecoverage; fi
+if [ -d ./build/reports/jacoco/test ]; then echo "Copying jacoco results"; cp -Rv ./build/reports/jacoco/test/*.xml ./shippable/codecoverage; fi
+if [ -d ./build/libs ]; then echo "Copying artifacts"; cp -Rv ./build/libs/* ./shippable/artifacts; fi
+
+echo "End on success"
