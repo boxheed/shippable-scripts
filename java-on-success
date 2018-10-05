@@ -10,4 +10,5 @@ mkdir -p shippable/artifacts
 # copy the output
 if [ -d ./build/test-results ]; then cp -R ./build/test-results/* ./shippable/testresults; fi
 if [ -d ./build/reports/cobertura ]; then cp -R ./build/reports/cobertura/*.xml ./shippable/codecoverage; fi
+if [ -d ./build/reports/jacoco/test ]; then cp -R ./build/reports/jacoco/test/*.xml ./shippable/codecoverage; fi
 if [ -d ./build/libs ]; then cp -R ./build/libs/* ./shippable/artifacts; fi
