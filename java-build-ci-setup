@@ -8,7 +8,7 @@ echo "Installed Java Verions"
 
 ls /usr/lib/jvm
 
-JVM_ROOT="/usr/lib/jvm/"
+JVM_ROOT="/usr/lib/jvm"
 
 case $SHIPPABLE_JDK_VERSION in
 	oraclejdk7)
