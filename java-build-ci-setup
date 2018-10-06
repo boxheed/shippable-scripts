@@ -50,3 +50,11 @@ echo "java_path: java_path"
 echo "java -verion"
 java -version
 
+echo "Updating git remote"
+git remote -v
+
+GIT_ORIGIN="git@github.com:$REPO_NAME.git"
+
+echo "Switching origin to $GIT_ORIGIN"
+git remote set-url origin git@github.com:$REPO_NAME.git
+
