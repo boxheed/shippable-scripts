@@ -43,6 +43,10 @@ export java_path="$JAVA_HOME/jre/bin/java"
 
 update-alternatives --set java $java_path
 
-echo "$JAVA_HOME"
-echo "$PATH"
-echo "java_path"
+echo "JAVA_HOME: $JAVA_HOME"
+echo "PATH: $PATH"
+echo "java_path: java_path"
+
+echo "java -verion"
+java -version
+
