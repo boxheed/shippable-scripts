@@ -8,10 +8,41 @@ echo "Installed Java Verions"
 
 ls /usr/lib/jvm
 
-if [[ $SHIPPABLE_JDK_VERSION == "openjdk7" ]] ; then export JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"; export PATH="$PATH:/usr/lib/jvm/java-7-openjdk-amd64/bin"; export java_path="/usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java"; fi
-if [[ $SHIPPABLE_JDK_VERSION == "oraclejdk7" ]] ; then export JAVA_HOME="/usr/lib/jvm/java-7-oracle"; export PATH="$PATH:/usr/lib/jvm/java-7-oracle/bin"; export java_path="/usr/lib/jvm/java-7-oracle/jre/bin/java"; fi
-if [[ $SHIPPABLE_JDK_VERSION == "openjdk6" ]] ; then export JAVA_HOME="/usr/lib/jvm/java-6-openjdk-amd64"; export PATH="$PATH:/usr/lib/jvm/java-6-openjdk-amd64/bin"; export java_path="/usr/lib/jvm/java-6-openjdk-amd64/jre/bin/java"; fi
-if [[ $SHIPPABLE_JDK_VERSION == "oraclejdk8" ]] ; then export JAVA_HOME="/usr/lib/jvm/java-8-oracle"; export PATH="$PATH:/usr/lib/jvm/java-8-oracle/bin"; export java_path="/usr/lib/jvm/java-8-oracle/jre/bin/java"; fi
+JVM_ROOT="/usr/lib/jvm/"
+
+case $SHIPPABLE_JDK_VERSION in
+	oraclejdk7)
+		JVM_PATH="java-7-oracle"
+		;;
+	oraclejdk8)
+		JVM_PATH="java-8-oracle"
+		;;
+	oraclejdk9)
+		JVM_PATH="java-9-oracle"
+		;;
+	oraclejdk10)
+		JVM_PATH="java-10-oracle"
+		;;
+	openjdk7)
+		JVM_PATH="java-7-openjdk-amd64"
+		;;
+	openjdk8)
+		JVM_PATH="java-8-openjdk-amd64"
+		;;
+	openjdk9)
+		JVM_PATH="java-9-openjdk-amd64"
+		;;
+  openjdk10)
+		JVM_PATH="java-10-openjdk-amd64"
+		;;
+esac
+
+export JAVA_HOME="$JVM_ROOT/$JVM_PATH"
+export PATH="$PATH:$JAVA_HOME/bin"
+export java_path="$JAVA_HOME/jre/bin/java"
 
 update-alternatives --set java $java_path
+
 echo "$JAVA_HOME"
+echo "$PATH"
+echo "java_path"
