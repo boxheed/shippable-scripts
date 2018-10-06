@@ -65,3 +65,5 @@ mkdir $HOME/.gradle
 printenv | grep GRADLE_PROP | cut -d'=' -f 2- >> $HOME/.gradle/gradle.properties
 echo "org.gradle.daemon=true" >> $HOME/.gradle/gradle.properties
 
+echo "gradle.properties keys"
+cat $HOME/.gradle/gradle.properties | cut -d'=' -f 1
