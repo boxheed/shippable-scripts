@@ -6,13 +6,9 @@ echo "Start on success"
 
 # create output folders
 
-ls
 mkdir -pv shippable/testresults
-
 mkdir -pv shippable/codecoverage
-
 mkdir -pv shippable/artifacts
-
 mkdir -pv shippable/codecoverage
 
 # copy the output
