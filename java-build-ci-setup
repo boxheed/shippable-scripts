@@ -4,7 +4,7 @@ set -e
 
 echo "Setting up Java"
 echo "Using $SHIPPABLE_JDK_VERSION"
-echo "Installed Java Verions" 
+echo "Available Java Verions" 
 
 ls /usr/lib/jvm
 
