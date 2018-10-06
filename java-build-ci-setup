@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -ve
+set -e
 
 echo "Setting up Java"
 echo "Using $SHIPPABLE_JDK_VERSION"
