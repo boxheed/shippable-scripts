@@ -60,7 +60,7 @@ git remote set-url origin git@github.com:$REPO_NAME.git
 git remote -v
 
 
-echo "Setting up gradle properties
+echo "Setting up gradle properties"
 mkdir $HOME/.gradle
 printenv | grep GRADLE_PROP | cut -d'=' -f 2- >> $HOME/.gradle/gradle.properties
 echo "org.gradle.daemon=true" >> $HOME/.gradle/gradle.properties
