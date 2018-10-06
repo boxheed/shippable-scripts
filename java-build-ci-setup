@@ -53,7 +53,8 @@ java -version
 echo "Updating git remote"
 git remote -v
 
-GIT_ORIGIN="git@github.com:$REPO_NAME.git"
+GIT_ORIGIN=${REPOSITORY_URL/https:\/\//git@}
+#GIT_ORIGIN="git@github.com:boxheed/$REPO_NAME.git"
 
 echo "Switching origin to $GIT_ORIGIN"
 git remote set-url origin git@github.com:$REPO_NAME.git
