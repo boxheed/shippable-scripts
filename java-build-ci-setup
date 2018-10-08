@@ -64,7 +64,8 @@ git remote -v
 echo "Setting up gradle properties"
 mkdir $HOME/.gradle
 printenv | grep GRADLE_PROP | cut -d'=' -f 2- >> $HOME/.gradle/gradle.properties
-echo "org.gradle.daemon=true" >> $HOME/.gradle/gradle.properties
+echo "org.gradle.daemon=false" >> $HOME/.gradle/gradle.properties
+echo "org.gradle.java.home=$JAVA_HOME" >> $HOME/.gradle/gradle.properties
 
 echo "gradle.properties keys"
 cat $HOME/.gradle/gradle.properties | cut -d'=' -f 1
