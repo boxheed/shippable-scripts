@@ -32,8 +32,11 @@ case $SHIPPABLE_JDK_VERSION in
 	openjdk9)
 		JVM_PATH="java-9-openjdk-amd64"
 		;;
-  openjdk10)
+	openjdk10)
 		JVM_PATH="java-10-openjdk-amd64"
+		;;
+	openjdk11)
+		JVM_PATH="java-11-openjdk-amd64"
 		;;
 esac
 
