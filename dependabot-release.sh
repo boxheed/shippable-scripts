@@ -6,7 +6,9 @@ DEVELOP_BRANCH="develop"
 for dir in */; do
     # Change directory to the subfolder
     cd "$dir"
+    echo "###########################################"
     echo "Processing $dir"
+    echo "###########################################"
     git remote -v
 
     if [ -d ".github" ]; then
@@ -28,6 +30,7 @@ for dir in */; do
             # Check if all the commits on the develop branch are by 'dependabot'
             if git log --pretty=%an --no-merges origin/${MAIN_BRANCH}..origin/${DEVELOP_BRANCH} | grep -qv '^dependabot.*'; then
                 echo "The develop branch is ahead of the main branch, but not all commits are by 'dependabot'. Skipping."
+                exit 1
             else
                 echo "The develop branch is ahead of main branch and all commits are by dependabot. Opening PR"
                 PR_OUTPUT=$(gh pr create --base ${MAIN_BRANCH} --head ${DEVELOP_BRANCH} --title "Auto-generated dependabot PR" --body "This pull request is automatically generated." 2>&1)
