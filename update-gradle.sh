@@ -15,8 +15,9 @@ for dir in */; do
         echo "###########################################"
         ./gradlew -version | grep "Gradle $gradle_version"
         if [ $? -eq 0 ]; then
-            echo "Skipping $dir, Gradle already upt to date."
+            echo "Skipping $dir, Gradle already upto date."
         else
+            echo "Upgrading Gradle to $gradle_version."
             set -e
             git remote -v
             git pull
