@@ -12,6 +12,7 @@ for dir in */; do
     git remote -v
 
     if [ -d ".github" ]; then
+        git pull
 
         # Determine branch name
         if git rev-parse --quiet --verify origin/main > /dev/null; then
@@ -19,7 +20,7 @@ for dir in */; do
         elif git rev-parse --quiet --verify origin/master > /dev/null; then
             MAIN_BRANCH="master"
         else
-            echo "Error: Unable to determine the main branch. Exiting."
+            echo "$dir - Error: Unable to determine the main branch. Exiting."
             exit 1
         fi
 
@@ -29,25 +30,25 @@ for dir in */; do
         if [ "$DEVELOP_AHEAD_COUNT" -gt 0 ]; then
             # Check if all the commits on the develop branch are by 'dependabot'
             if git log --pretty=%an --no-merges origin/${MAIN_BRANCH}..origin/${DEVELOP_BRANCH} | grep -qv '^dependabot.*'; then
-                echo "The develop branch is ahead of the main branch, but not all commits are by 'dependabot'. Skipping."
+                echo "$dir - The develop branch is ahead of the main branch, but not all commits are by 'dependabot'. Skipping."
                 exit 1
             else
-                echo "The develop branch is ahead of main branch and all commits are by dependabot. Opening PR"
+                echo "$dir - The develop branch is ahead of main branch and all commits are by dependabot. Opening PR"
                 PR_OUTPUT=$(gh pr create --base ${MAIN_BRANCH} --head ${DEVELOP_BRANCH} --title "Auto-generated dependabot PR" --body "This pull request is automatically generated." 2>&1)
                 PR_URL=$(echo "$PR_OUTPUT" | grep -oP 'https://github\.com/.+')
 
                 if [ -n "$PR_URL" ]; then
-                    echo "Merging Pull Request: $PR_URL"
+                    echo "$dir - Merging Pull Request: $PR_URL"
                     gh pr checks ${PR_URL} --watch
                     # Merge the pull request
                     gh pr merge --merge "${PR_URL}"
                 else
-                    echo "Error: Unable to extract the pull request URL from the output."
+                    echo "$dir - Error: Unable to extract the pull request URL from the output."
                     exit 1
                 fi
             fi
         else
-            echo "No action needed. The develop branch is not ahead of the main branch."
+            echo "$dir - No action needed. The develop branch is not ahead of the main branch."
         fi
     fi
     

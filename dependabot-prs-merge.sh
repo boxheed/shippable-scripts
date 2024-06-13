@@ -2,20 +2,21 @@
 for dir in */; do
     # Change directory to the subfolder
     cd "$dir"
-    
+    echo "Checking for PR's on $dir"
     if [ -d ".git" ]; then
         # Fetch latest PR information
         gh pr list --json number,author,state,mergeable,title --state open > /tmp/open_prs.json
-
+        #gh pr list
         # Check if there are any open PRs
-        if ! jq .[].number open_prs.json >/dev/null 2>&1; then
+        if ! jq .[].number /tmp/open_prs.json >/dev/null 2>&1; then
             echo "No open pull requests found in $dir"
         else
             # Loop through each open PR
-            for pr_data in $(jq -r '.[].number' open_prs.json); do
+            for pr_data in $(jq -r '.[].number' /tmp/open_prs.json); do
 
                 # Extract PR number, user login, and merge states
                 details=$(gh pr view "$pr_data" --json number,author,state,mergeable,title )
+                
                 # Extract user login and mergeable state
                 user_login=$(jq .author.login <<< "$details")
                 mergeable=$(jq .mergeable <<< "$details")
@@ -27,7 +28,8 @@ for dir in */; do
                 echo "PR found: $pr_number - $pr_title by $user_login { $mergeable $checks_passed }"
 
                 # Check if PR is from dependabot, has passed checks, and is mergeable
-                if [[ "$user_login" == "\"app/dependabot\"" && "$mergeable" == "\"MERGEABLE\"" && $checks_passed -eq 0 ]]; then
+                # 
+                if [[ "$mergeable" == "\"MERGEABLE\"" && "$user_login" == "\"app/dependabot\"" && $checks_passed -eq 0 ]]; then
                     echo "Merging PR #$pr_number - $pr_title by $user_login"
                     gh pr merge "$pr_number" --auto --merge
                 else 
@@ -41,5 +43,5 @@ for dir in */; do
     fi
     
     # Change back to the parent directory
-    cd -
+    cd - >/dev/null 2>&1
 done
