@@ -11,6 +11,3 @@ echo "org.gradle.java.home=$JAVA_HOME" >> $HOME/.gradle/gradle.properties
 echo "gradle.properties keys"
 cat $HOME/.gradle/gradle.properties | cut -d'=' -f 1
 
-echo "Configuring git user"
-git config user.name "$CIRCLE_USERNAME"
-git config user.email "$CIRCLE_USERNAME@users.noreply.github.com" 
