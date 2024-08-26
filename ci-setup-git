@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+echo "Configuring git user"
+if [ -d "$DIRECTORY" ]; then
+  git config user.name "$CIRCLE_USERNAME"
+  git config user.email "$CIRCLE_USERNAME@users.noreply.github.com" 
+else
+  echo "Directory does not exist."
+fi
