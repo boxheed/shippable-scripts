@@ -3,7 +3,7 @@
 set -e
 
 echo "Configuring git user"
-if [ -d "$DIRECTORY" ]; then
+if [ -d ".git" ]; then
   git config user.name "$CIRCLE_USERNAME"
   git config user.email "$CIRCLE_USERNAME@users.noreply.github.com" 
 else
