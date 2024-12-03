@@ -26,7 +26,7 @@ for dir in */; do
 
         # Fetch changes from remote repo and determine difference
         git fetch origin
-        DEVELOP_AHEAD_COUNT=$(git rev-list --count origin/${DEVELOP_BRANCH} ^origin/${MAIN_BRANCH})
+        DEVELOP_AHEAD_COUNT=$(git rev-list --no-merges --count origin/${DEVELOP_BRANCH} ^origin/${MAIN_BRANCH})
         if [ "$DEVELOP_AHEAD_COUNT" -gt 0 ]; then
             # Check if all the commits on the develop branch are by 'dependabot'
             if git log --pretty=%an --no-merges origin/${MAIN_BRANCH}..origin/${DEVELOP_BRANCH} | grep -qv '^dependabot.*'; then
