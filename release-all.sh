@@ -24,7 +24,7 @@ for dir in */; do
     # Fetch changes from remote repo and determine difference
     git fetch origin
     git pull
-    DEVELOP_AHEAD_COUNT=$(git rev-list --count origin/${DEVELOP_BRANCH} ^origin/${MAIN_BRANCH})
+    DEVELOP_AHEAD_COUNT=$(git rev-list --count --no-merges origin/${DEVELOP_BRANCH} ^origin/${MAIN_BRANCH})
     if [ "$DEVELOP_AHEAD_COUNT" -gt 0 ]; then
         # Check if all the commits on the develop branch are by 'dependabot'
         echo "The develop branch is ahead of main branch. Opening PR"
