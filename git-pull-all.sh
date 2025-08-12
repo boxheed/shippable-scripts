@@ -4,7 +4,9 @@
 for dir in */; do
     # Change directory to the subfolder
     cd "$dir"
-    
+    echo "##################"
+    echo "pulling $dir"
+    echo "##################"
     if [ -d ".git" ]; then
         git pull
     fi
