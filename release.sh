@@ -25,10 +25,30 @@ if [ "$DEVELOP_AHEAD_COUNT" -gt 0 ]; then
     PR_URL=$(echo "$PR_OUTPUT" | grep -oP 'https://github\.com/.+')
 
     if [ -n "$PR_URL" ]; then
-        echo "Merging Pull Request: $PR_URL"
-        gh pr checks ${PR_URL} --watch
-        # Merge the pull request
-        gh pr merge --merge "${PR_URL}"
+        echo "Waiting for checks to start on Pull Request: $PR_URL"
+        attempts=0
+        max_attempts=12
+        check_count=0
+        while [ "$attempts" -lt "$max_attempts" ]; do
+            check_count=$(gh pr checks "${PR_URL}" --json state --jq 'length' 2>/dev/null || echo "0")
+            if [[ "$check_count" =~ ^[0-9]+$ ]] && [ "$check_count" -gt 0 ]; then
+                echo "Checks have started ($check_count checks found)."
+                break
+            fi
+            echo "No checks reported yet. Waiting 10 seconds... (Attempt $((attempts + 1))/$max_attempts)"
+            sleep 10
+            attempts=$((attempts + 1))
+        done
+
+        echo "Watching checks for Pull Request: $PR_URL"
+        if gh pr checks "${PR_URL}" --watch; then
+            echo "All checks passed. Merging Pull Request..."
+            # Merge the pull request
+            gh pr merge --merge "${PR_URL}"
+        else
+            echo "Error: Pull request checks failed. Merge aborted."
+            exit 1
+        fi
     else
         echo "Error: Unable to extract the pull request URL from the output."
         exit 1
